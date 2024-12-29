@@ -86,11 +86,12 @@ This project is for **educational purposes only**. It is not intended for real b
 ## Author
 
 **Reddy Naresh**  
-The placeholder **Author** section in the provided README file content was left empty to ensure that proper attribution is added. Here’s the corrected version of the **Author** section:
+MCA Student at NSRIT (Autonomous) and Student at IIT Mandi.
+
+##Connect Through:-
+Mail ID:- 06.nareshreddy@gmail.com
+LinkedIn:- https://www.linkedin.com/in/iamnaresh06/
+Instagram:- https://www.instagram.com/iamnaresh_06/
+```
 
 ```markdown
-## Author
-
-**Reddy Naresh**  
-MCA Student at NSRIT (Autonomous) and Student at IIT Mandi.
-```
