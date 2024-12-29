@@ -88,9 +88,8 @@ This project is for **educational purposes only**. It is not intended for real b
 **Reddy Naresh**  
 MCA Student at NSRIT (Autonomous) and Student at IIT Mandi.
 
-##Connect Through:-
+## Connect Through:-
 - Mail ID:- 06.nareshreddy@gmail.com 
 - LinkedIn:- https://www.linkedin.com/in/iamnaresh06/ 
 - Instagram:- https://www.instagram.com/iamnaresh_06/ 
 ```
-```markdown
