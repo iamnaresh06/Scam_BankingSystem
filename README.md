@@ -22,6 +22,7 @@ Welcome to the **Scam Banking System**, a beginner-friendly banking system creat
 
 - **Security**:
   - Password hashing using SHA-256 for secure storage.
+  - I used getpass() module, getpass.getpass() hides the input characters and replaces them with nothing.
   - OTP-based authentication for enhanced login security.
 
 ---
