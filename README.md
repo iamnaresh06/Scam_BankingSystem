@@ -90,5 +90,7 @@ This project is for **educational purposes only**. It is not intended for real b
 MCA Student at NSRIT | Minor in Computer Science Engineering & NextGen Technologies at IIT Mandi | Aspiring Software Developer
 
 ## Connect Through:-
-- Mail ID:- 06.nareshreddy@gmail.com 
-- LinkedIn:- https://www.linkedin.com/in/iamnaresh06/ 
+- Mail ID:- 06.nareshreddy@gmail.com   
+- 🔗 [GitHub: @iamnaresh06](https://github.com/iamnaresh06)  
+- 💼 [LinkedIn: iamnaresh06](https://www.linkedin.com/in/iamnaresh06)  
+- 🌐 [Portfolio Website](https://reddynaresh.netlify.app/) 
