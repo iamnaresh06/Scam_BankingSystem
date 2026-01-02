@@ -91,15 +91,20 @@ def forgot_password_view(request):
             request.session['reset_email'] = email
             
             # Send email
-            send_mail(
-                'Password Reset OTP',
-                f'Your OTP for password reset is: {otp}',
-                None, # Uses DEFAULT_FROM_EMAIL from settings
-                [email],
-                fail_silently=False,
-            )
-            messages.success(request, f'OTP sent to {email}')
-            return redirect('verify_otp')
+            try:
+                send_mail(
+                    'Password Reset OTP',
+                    f'Your OTP for password reset is: {otp}',
+                    None, # Uses DEFAULT_FROM_EMAIL from settings
+                    [email],
+                    fail_silently=False,
+                )
+                messages.success(request, f'OTP sent to {email}')
+                return redirect('verify_otp')
+            except Exception as e:
+                messages.error(request, f"Failed to send email: {str(e)}")
+                # Log the error for debugging
+                print(f"SMTP Error: {e}")
         except User.DoesNotExist:
             messages.error(request, 'Email not found!')
     return render(request, 'banking/forgot_password.html')
