@@ -90,11 +90,11 @@ def forgot_password_view(request):
             request.session['reset_otp'] = otp
             request.session['reset_email'] = email
             
-            # Send email (Console Backend)
+            # Send email
             send_mail(
                 'Password Reset OTP',
                 f'Your OTP for password reset is: {otp}',
-                'admin@scambank.com',
+                None, # Uses DEFAULT_FROM_EMAIL from settings
                 [email],
                 fail_silently=False,
             )
