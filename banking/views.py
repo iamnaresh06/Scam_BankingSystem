@@ -95,16 +95,20 @@ def forgot_password_view(request):
                 send_mail(
                     'Password Reset OTP',
                     f'Your OTP for password reset is: {otp}',
-                    None, # Uses DEFAULT_FROM_EMAIL from settings
+                    None,
                     [email],
                     fail_silently=False,
                 )
                 messages.success(request, f'OTP sent to {email}')
-                return redirect('verify_otp')
             except Exception as e:
-                messages.error(request, f"Failed to send email: {str(e)}")
-                # Log the error for debugging
-                print(f"SMTP Error: {e}")
+                # IMPORTANT: Render Free blocks SMTP ports. 
+                # We log the OTP here so you can find it in the Render Dashboard Logs.
+                print(f"!!! RENDER SMTP BLOCKED !!!")
+                print(f"OTP for {email} is: {otp}")
+                print(f"Full Error: {e}")
+                messages.warning(request, f"Email delivery is restricted on Render Free. Please check your Render Dashboard Logs to find your OTP.")
+            
+            return redirect('verify_otp')
         except User.DoesNotExist:
             messages.error(request, 'Email not found!')
     return render(request, 'banking/forgot_password.html')
