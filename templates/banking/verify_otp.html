@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>Verify OTP</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 1rem;">
+            Check your email (or terminal console) for the 6-digit code.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="otp">Enter OTP</label>
+                <input type="text" name="otp" id="otp" maxlength="6" required
+                    style="letter-spacing: 5px; text-align: center; font-size: 1.2rem;">
+            </div>
+            <button type="submit" class="btn-primary full-width">Verify</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

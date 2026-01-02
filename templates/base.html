@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Bank | Premium Banking</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo" style="text-decoration: none;">
+            <i class="fas fa-university"></i> ScamBank
+        </a>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+            <span class="user-welcome">Hello, {{ user.first_name }}</span>
+            {% if user.is_superuser %}
+            <a href="{% url 'admin_dashboard' %}">Admin Panel</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}" class="btn-primary">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Scam Banking System. All rights reserved.</p>
+        <p class="footer-credit">Test Centre | Created by <span class="creator-name">Naresh Reddy</span></p>
+        <p><a href="{% url 'login' %}" class="admin-link">Admin Login</a></p>
+    </footer>
+
+    <script>
+        // Simple animation for alerts
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 3000);
+    </script>
+</body>
+
+</html>

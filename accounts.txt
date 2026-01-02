@@ -1,1 +1,0 @@
-Account Number,Account Holder,Mobile Number,Password,Balance,Account Type

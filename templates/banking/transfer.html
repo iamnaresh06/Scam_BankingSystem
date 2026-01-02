@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>P2P Transfer</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+            Fast, secure, and totally handled with care.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-msg">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-primary full-width">Send Money</button>
+            <div style="margin-top: 1rem; text-align: center;">
+                <a href="{% url 'dashboard' %}" class="btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
