@@ -1,0 +1,112 @@
+SCAM BANKING SYSTEM (SBS) - INTERVIEW GUIDE
+=================================================
+
+PROJECT OVERVIEW
+-----------------
+"Scam Banking System" is a full-stack web application built with Django (Python). 
+It simulates a core banking platform with features like account creation, deposits, withdrawals, and peer-to-peer transfers.
+
+The "Twist": 
+The project includes a simulation of "Hidden Fees" or "Scam Logic" where random service fees (10-30%) are deducted during transfers. This demonstrates your ability to implement custom business logic and manipulate data dynamically.
+
+-------------------------------------------------
+1. TECHNOLOGY STACK
+-------------------------------------------------
+*   **Language:** Python 3.10+
+*   **Framework:** Django 5.0 (High-level Web Framework)
+*   **Database:** SQLite (Default/Local), compatible with PostgreSQL.
+*   **Frontend:** HTML5, CSS3 (Custom Design), Django Template Language (DTL).
+*   **Server:** Gunicorn (Deployment), Whitenoise (Static Files).
+*   **Hosting:** Render (Cloud PaaS).
+
+-------------------------------------------------
+2. KEY FEATURES & EXPLANATIONS
+-------------------------------------------------
+
+A. USER AUTHENTICATION & SECURITY
+   - **Login/Register:** Uses Django's built-in User model extended with a One-to-One 'Account' model.
+   - **Password Security:** Django hashes passwords automatically (PBKDF2).
+   - **Password Reset:** Implemented a custom OTP (One-Time Password) system via Email (`smtp.gmail.com`). 
+     - *Interview Tip:* Mention that you used `django.core.mail` and stored the OTP in the user's `session` temporarily for verification.
+
+B. BANKING TRANSACTIONS (The Core Logic)
+   - **Deposit & Withdraw:** Simple CRUD operations updating the `balance` field.
+   - **Atomic Transactions:** 
+     - *Crucial Concept:* I used `@transaction.atomic` decorator for sensitive operations like Transfers. 
+     - *Why?* Checks if either the "Sender Deduction" or "Recipient Addition" fails. If one fails, the entire transaction rolls back. This prevents money from disappearing or being duplicated.
+
+C. THE "SCAM" LOGIC (Hidden Fees)
+   - In the `transfer_view`, I implemented a logic that calculates a random percentage (10-30%) of the transfer amount.
+   - This "Service Fee" is deducted from the sender but *not* credited to the receiver. It's "lost" to the bank.
+   - This demonstrates complex logic beyond simple CRUD (Create, Read, Update, Delete).
+
+D. ADMIN PANEL
+   - Custom Admin dashboard to view all accounts and delete users if needed.
+   - Built using Django's `@user_passes_test` to ensure only Superusers can access it.
+
+-------------------------------------------------
+3. DATABASE STRUCTURE (Models)
+-------------------------------------------------
+I used two main models in `banking/models.py`:
+
+1.  **Account Model:**
+    - `user`: OneToOne link to Django User.
+    - `account_number`: Unique 10-digit generated number.
+    - `balance`: DecimalField (for money precision).
+    - `account_type`: Savings or Fixed Deposit.
+
+2.  **Transaction Model:**
+    - `account`: ForeignKey (Many transactions belong to one account).
+    - `amount`: The value of the transaction.
+    - `transaction_type`: Deposit, Withdrawal, Transfer, Service Fee.
+    - `timestamp`: DateTime when it happened.
+
+-------------------------------------------------
+4. PACKAGES USED & PURPOSE
+-------------------------------------------------
+These are listed in `requirements.txt`:
+
+1.  `Django`: The core framework handles routing, database ORM, and views.
+2.  `gunicorn`: A production-grade WSGI HTTP server to run the Python code on the web.
+3.  `whitenoise`: A library to serve static files (CSS/Images) directly from the Gunicorn server (needed for deployment on Render/Heroku).
+
+-------------------------------------------------
+5. DEVELOPMENT TIMELINE (Your Story)
+-------------------------------------------------
+If asked "How did you build this?", follow this flow:
+
+1.  **Setup:** "I started by initializing a Django project and creating a 'banking' app."
+2.  **Database Design:** "I first designed the Models (`Account`, `Transaction`) because data structure dictates functionality."
+3.  **Authentication:** "I built the Register/Login system so users could have their own secure space."
+4.  **Core Logic:** "I implemented Deposit and Withdraw, ensuring the math was correct."
+5.  **Complex Logic:** "I added the Transfer feature using Atomic Transactions to ensure data integrity, and then added the 'Hidden Fee' logic as a challenge."
+6.  **Refactoring:** "Finally, I cleaned up the UI with CSS and optimized the code for readability."
+
+-------------------------------------------------
+6. CODE HIGHLIGHT (For the Whiteboard)
+-------------------------------------------------
+If they ask you to write code, the `transfer_view` is the best example:
+
+```python
+@transaction.atomic
+def transfer(request):
+    # 1. Get Sender and Recipient
+    sender = request.user.account
+    recipient = Account.objects.get(account_number=...)
+
+    # 2. Calculate Fee
+    fee = amount * 0.20 # 20% fee
+
+    # 3. Safe Execution
+    if sender.balance >= (amount + fee):
+        sender.balance -= (amount + fee)
+        recipient.balance += amount # Recipient creates only the amount
+        sender.save()
+        recipient.save()
+```
+
+This snippet shows you understand **Database Locking**, **Business Logic**, and **Error Handling**.
+
+-------------------------------------------------
+GOOD LUCK WITH THE INTERVIEW!
+You have built a solid Full-Stack functionality here. Be confident about the "Atomic Transactions" and "Session-based OTP" parts—those show real engineering depth.
